@@ -37,13 +37,15 @@ function calculateGPA() {
   }
   
 
-// JavaScript code for counting visitors (same as in previous answer)
+
+// Get the unique visitor ID from localStorage, or create a new one if it doesn't exist
 var visitorId = localStorage.getItem('visitorId');
 if (!visitorId) {
-  visitorId = Math.floor(Math.random() * 1000000000);
+  visitorId = Math.floor(Math.random() * 1000000000); // Generate a random ID
   localStorage.setItem('visitorId', visitorId);
 }
 
+// Get the list of all visitor IDs that have been stored in localStorage
 var visitorIds = localStorage.getItem('visitorIds');
 if (!visitorIds) {
   visitorIds = [];
@@ -51,13 +53,23 @@ if (!visitorIds) {
   visitorIds = JSON.parse(visitorIds);
 }
 
+// Add the current visitor's ID to the list if it doesn't already exist
 if (visitorIds.indexOf(visitorId) == -1) {
   visitorIds.push(visitorId);
   localStorage.setItem('visitorIds', JSON.stringify(visitorIds));
 }
 
+// Increment the total number of website visits
+var visitCount = localStorage.getItem('visitCount');
+if (!visitCount) {
+  visitCount = 0;
+}
+visitCount++;
+localStorage.setItem('visitCount', visitCount);
+
+// Get the total number of unique visitors
 var numVisitors = visitorIds.length;
 
-// JavaScript code for displaying the number of visitors in the HTML
-var visitorCountElement = document.getElementById('visitorCount');
-visitorCountElement.innerHTML = numVisitors;
+// Display the results in the HTML document
+document.getElementById('visitor-count').textContent = numVisitors;
+document.getElementById('visit-count').textContent = visitCount;
